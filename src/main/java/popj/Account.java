@@ -1,5 +1,7 @@
+package popj;
+
 public class Account {
-    private String name;
+    private String username;
     private String password;
     private double money;
     private int CardNumber;
@@ -13,11 +15,11 @@ public class Account {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getPassword() {
@@ -34,5 +36,15 @@ public class Account {
 
     public void setMoney(double money) {
         this.money = money;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "name='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", money=" + money +
+                ", CardNumber=" + CardNumber +
+                '}';
     }
 }

@@ -1,12 +1,17 @@
+import popj.Account;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ATM {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Scanner scanner = new Scanner(System.in);
 
         ArrayList<Account> accounts = new ArrayList<>();
+        accounts = user.usernames(accounts);
+
         while (true) {
             System.out.println("----------");
             System.out.println("1 登录账号");
@@ -55,14 +60,14 @@ public class ATM {
     static Account login(ArrayList<Account> arrayList, Scanner scanner) {
 
         //卡号
-        System.out.println("输入卡号");
-        int CardNumber = scanner.nextInt();
+        System.out.println("输入账号");
+        String name = scanner.next();
         //输入密码
         System.out.println("密码");
         String password = scanner.next();
         for (int i = 0; i < arrayList.size(); i++) {
             Account account = arrayList.get(i);
-            if (account.getCardNumber() == CardNumber) {
+            if (account.getName().equals(name)) {
                 if (account.getPassword().equals(password)) {
                     return account;
                 }
@@ -90,9 +95,7 @@ public class ATM {
             }
 
         }
-        int CardNumber = (int) ((Math.random() * (10 * 8) + 1) + 100000);
-        account.setCardNumber(CardNumber);
-        System.out.println("姓名：" + account.getName() + " 卡号为 : " + account.getCardNumber());
+        System.out.println("姓名：" + account.getName() );
         return account;
 
     }
@@ -110,12 +113,12 @@ public class ATM {
         int i = scanner.nextInt();
         switch (i) {
             case 1:
-                System.out.println("姓名：" + account.getName() + " 余额：" + account.getMoney() + " 卡号：" + account.getCardNumber());
+                System.out.println("姓名：" + account.getName() + " 余额：" + account.getMoney() );
                 break;
             case 2:
 
-                System.out.println("输入转账卡号");
-                int getCardNumber = scanner.nextInt();
+                System.out.println("输入转账账号");
+                String username = scanner.next();
 
                 System.out.println("输入转账多少元");
                 double money = scanner.nextDouble();
@@ -123,7 +126,7 @@ public class ATM {
                     System.out.println("你的钱不够");
                     break;
                 }
-                double transfer = Transfer(account, money, accounts, getCardNumber);
+                double transfer = Transfer(account, money, accounts,username);
                 System.out.println("当前余额为：" + transfer);
                 break;
             case 3:
@@ -178,14 +181,14 @@ public class ATM {
         return true;
     }
 
-    static double Transfer(Account account, double money, ArrayList<Account> arrayList, int getCardNumber) {
+    static double Transfer(Account account, double money, ArrayList<Account> arrayList, String username) {
         for (int i = 0; i < arrayList.size(); i++) {
             Account o = arrayList.get(i);
-            if (o.getCardNumber() != getCardNumber) {
-                System.out.println("卡号无效");
-            } else {
+            if (o.getName().equals(username)) {
                 account.setMoney(account.getMoney() - money);
                 o.setMoney(money);
+            } else {
+                System.out.println("没有此人");
             }
         }
         return account.getMoney();
